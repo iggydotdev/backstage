@@ -107,3 +107,28 @@ do not proceed. Fix the regression before moving on.
   "iteration": 0
 }
 ```
+
+---
+
+## Context loading
+
+Your context is pre-prepared in `handoff.json > contextSlice`.
+Read **only** from `contextSlice` — do not open context files directly.
+
+If `contextSlice.preparedFor` does not match your role, stop and log
+a `warn` event before doing anything else. The pipeline orchestrator
+must re-run `prepare-context-slice` with the correct target.
+
+---
+
+## Writing to agentNotes
+
+Every note written to `handoff.json > context.agentNotes` must follow
+the tagging convention in `skills/agent-notes-convention.md`:
+
+```
+[WRITER → TARGET]: note body
+```
+
+Use your role token as WRITER. Choose TARGET from the convention doc.
+Never overwrite — always append. One concern per note.
