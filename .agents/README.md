@@ -8,7 +8,7 @@ development pipeline.
 ## Structure
 
 ```
-repo-root/
+root/
 ├── AGENTS.md                            ← universal tool-agnostic entry point
 ├── pipeline.log.ndjson                  ← append-only event log (all specs)
 │
@@ -23,8 +23,8 @@ repo-root/
 │   └── done/                            ← archived after merge
 │
 └── .agents/
-    ├── README.md
-│   ├── security.md                      ← read before running anything                        ← this file
+    ├── README.md                        ← this file
+│   ├── security.md                      ← read before running anything
     ├── handoff/
     │   └── schema.md                    ← typed JSON contract (v1.1.0)
     ├── context/                         ← git-versioned, evolves over time
