@@ -24,9 +24,9 @@ root/
 │
 └── .agents/
     ├── README.md                        ← this file
-│   ├── security.md                      ← read before running anything
+    ├── security.md                      ← read before running anything
     ├── handoff/
-    │   └── schema.md                    ← typed JSON contract (v1.1.0)
+    │   └── schema.md                    ← typed JSON contract (v1.4.0)
     ├── context/                         ← git-versioned, evolves over time
     │   ├── system.md                    ← architect: product + domain model
     │   ├── decisions.md                 ← architect: ADR log
@@ -47,8 +47,8 @@ root/
     │       └── orchestrator.md          ← validates ACs, routes defects
     └── skills/
         ├── observability.md             ← event schema, log format, checkpoints
-    ├── definition-of-done.md        ← canonical DoD checklist per phase
-    └── agent-notes-convention.md    ← tagging format for agentNotes field
+        ├── definition-of-done.md        ← canonical DoD checklist per phase
+        ├── agent-notes-convention.md    ← tagging format for agentNotes field
         ├── error-handling.md            ← failure classification, retry, recovery
         └── atoms/
             ├── create-branch.md

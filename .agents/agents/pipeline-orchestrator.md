@@ -153,18 +153,20 @@ QA orchestrator runs its full suite and either:
 #### If QA escalates:
 - Halt. Notify human. Do not retry.
 
-### Step 9 — Merge
+### Step 9 — Request merge
 Once `ticket.status = "done"`:
 
-```bash
-git checkout develop
-git merge --no-ff feature/SPEC-NNN-slug
-git push origin develop
-git branch -d feature/SPEC-NNN-slug
-git push origin --delete feature/SPEC-NNN-slug
-```
+1. Append final audit entry to `handoff.json` and push to the feature branch
+2. Update the PR description with a merge-ready summary:
+   - All DoD checks passed
+   - QA passed with zero current-ticket defects
+   - Link to the full audit trail
+3. Add the `ready-to-merge` label to the PR
+4. Comment on the PR: "✅ Pipeline complete. All checks passed. Ready for human merge."
+5. Set `ticket.status = "merge_ready"`
 
-Append final audit entry to `handoff.json` before merge.
+**Do NOT merge the PR.** Per security policy, agents never merge — humans do.
+Halt here. Resume at Step 10 when the human confirms the merge is complete.
 
 ### Step 10 — Archive spec
 Invoke skill: `.agents/skills/atoms/archive-spec.md`
@@ -215,7 +217,8 @@ and `handoff.json`:
 | `tdd.phase = "green" or "blue"` | Step 6 — Developer Orchestrator |
 | `tdd.phase = "complete"`, `ticket.status = "pr_draft"` | Step 7 — Await human review |
 | `humanReview.status = "approved"` | Step 8 — QA |
-| `ticket.status = "done"` | Step 9 — Merge |
+| `ticket.status = "done"` | Step 9 — Request merge |
+| `ticket.status = "merge_ready"` | Step 10 — Archive spec (after human confirms merge) |
 
 ---
 

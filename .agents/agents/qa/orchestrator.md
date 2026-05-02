@@ -105,9 +105,12 @@ For every issue found, create a defect object and add it to `handoff.json > defe
 #### If no defects:
 - Set `ticket.status = "done"`
 - Comment on the PR: "✅ QA passed. All ACs verified. No defects found."
-- Merge the PR into `develop` (or flag for merge if auto-merge is not enabled)
 - Update ticket in [TICKET_SYSTEM] to "Done"
 - Append to `audit`
+- Return control to the Pipeline Orchestrator — it handles the merge request
+
+**Do NOT merge the PR.** QA validates — it does not merge. The pipeline
+orchestrator requests a human merge via Step 9.
 
 #### If defects exist on current code (`return_to_developer`):
 - Set `ticket.status = "blocked"`

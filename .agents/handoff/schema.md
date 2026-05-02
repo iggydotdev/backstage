@@ -29,7 +29,7 @@ Schema version: `1.4.0`
     "id": "SPEC-001",
     "title": "Short description of the spec",
     "url": ".specs/active/SPEC-001-slug.md",
-    "status": "in_progress | pr_draft | pr_ready | qa | done | blocked"
+    "status": "in_progress | pr_draft | pr_ready | qa | done | merge_ready | blocked"
   },
 
   "requirements": {
@@ -155,15 +155,7 @@ Schema version: `1.4.0`
       "tddPhase": "red",
       "iteration": 0,
       "qaRuns": 0,
-
-  "dod": {
-    "lastCheckedPhase": "red | green | blue | qa",
-    "lastCheckedAt": "ISO8601",
-    "passed": false,
-    "failedChecks": [],
-    "warnChecks": [],
-    "recommendedAction": "advance | return_to_red | return_to_green | return_to_blue | escalate"
-  },
+      "lastDodPassed": false,
       "lastAuditEntry": {}
     },
     "agentNotes": "Filtered agentNotes relevant to this agent"
