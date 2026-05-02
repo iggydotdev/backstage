@@ -172,7 +172,7 @@ Before any agent reads `handoff.json`, it must validate:
 ```
 Required fields present: ticket.id, requirements.brs, requirements.acs,
                          branch.name, tdd.phase, audit (non-empty array)
-Schema version matches: schemaVersion == "1.1.0"
+Schema version matches: schemaVersion == "1.4.0"
 No field is null that should not be: ticket.status, branch.base
 audit array is valid JSON array
 ```

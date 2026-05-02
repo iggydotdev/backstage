@@ -79,7 +79,7 @@ If missing → use first 30 lines as fallback, log a `warn` event.
 "contextSlice": {
   "preparedFor": "red",
   "preparedAt": "ISO8601",
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.4.0",
   ... role-specific fields ...
 }
 ```

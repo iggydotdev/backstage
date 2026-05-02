@@ -292,7 +292,7 @@ If a source file is missing:
 "contextSlice": {
   "preparedFor": "red",
   "preparedAt": "ISO8601",
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.4.0",
   ...role-specific fields...
 }
 ```

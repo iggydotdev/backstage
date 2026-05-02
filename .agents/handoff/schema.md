@@ -137,7 +137,7 @@ Schema version: `1.4.0`
   "contextSlice": {
     "preparedFor": "red | green | blue | developer-orchestrator | qa | pipeline-orchestrator | architect | ba",
     "preparedAt": "ISO8601",
-    "schemaVersion": "1.0",
+    "schemaVersion": "1.4.0",
     "domainGlossary": "Trimmed domain concepts relevant to this spec and agent",
     "relevantDecisions": [
       "ADR-001: One-line summary of decision relevant to this agent"
