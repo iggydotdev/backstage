@@ -2,23 +2,24 @@
 set -euo pipefail
 
 # ──────────────────────────────────────────────────────────────────────
-# Backstage Pipeline — Setup Script
+# Backstage Pipeline — Bootstrap
 #
-# Bootstraps the agentic SDLC pipeline into a target repository.
+# Copy this script into your repo and run it. It will:
+#   1. Clone the backstage repo into a temp directory
+#   2. Copy all pipeline files into your current repo
+#   3. Create .vscode/ config templates
+#   4. Create develop branch if needed
+#   5. Make an initial commit
+#   6. Clean up
 #
 # Usage:
-#   ./setup.sh /path/to/target/repo
-#
-# What it does:
-#   1. Copies .agents/, .github/, .specs/, .pipeline/, AGENTS.md
-#   2. Creates pipeline.log.ndjson (empty)
-#   3. Creates .vscode/settings.json and .vscode/mcp.json templates
-#   4. Creates develop branch if it doesn't exist
-#   5. Makes an initial commit with all pipeline files
+#   curl -sL https://raw.githubusercontent.com/iggydotdev/backstage/main/setup.sh | bash
+#   # or
+#   cp setup.sh /path/to/your/repo/ && cd /path/to/your/repo && ./setup.sh
 # ──────────────────────────────────────────────────────────────────────
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET="${1:-}"
+REPO_URL="https://github.com/iggydotdev/backstage.git"
+BRANCH="main"
 
 # ── Colours ──────────────────────────────────────────────────────────
 RED='\033[0;31m'
@@ -34,38 +35,24 @@ err()  { echo -e "${RED}✗${NC} $1" >&2; }
 step() { echo -e "\n${CYAN}${BOLD}→ $1${NC}"; }
 
 # ── Validate ─────────────────────────────────────────────────────────
-if [[ -z "$TARGET" ]]; then
-  echo -e "${BOLD}Backstage Pipeline — Setup${NC}"
-  echo ""
-  echo "Usage: $0 /path/to/target/repo"
-  echo ""
-  echo "Bootstraps the agentic SDLC pipeline into an existing git repository."
-  echo "The target directory must already be a git repo (or empty for git init)."
-  exit 1
-fi
+TARGET="$(pwd)"
 
-# Resolve to absolute path
-TARGET="$(cd "$TARGET" 2>/dev/null && pwd)" || {
-  err "Target directory does not exist: $1"
-  exit 1
-}
-
-# Check it's a git repo (or offer to init)
+# Must be in a git repo (or offer to init)
 if [[ ! -d "$TARGET/.git" ]]; then
-  warn "Target is not a git repository."
-  read -rp "   Initialise git in $TARGET? [y/N] " yn
+  warn "Current directory is not a git repository."
+  read -rp "   Initialise git here? [y/N] " yn
   if [[ "$yn" =~ ^[Yy]$ ]]; then
-    git -C "$TARGET" init
+    git init
     log "Initialised git repository"
   else
-    err "Aborted — target must be a git repository."
+    err "Aborted — run this from inside a git repository."
     exit 1
   fi
 fi
 
-# Check for existing .agents/ (don't clobber)
+# Check for existing .agents/
 if [[ -d "$TARGET/.agents" ]]; then
-  warn "Target already has .agents/ directory."
+  warn "This repo already has .agents/ directory."
   read -rp "   Overwrite existing pipeline files? [y/N] " yn
   if [[ ! "$yn" =~ ^[Yy]$ ]]; then
     err "Aborted — will not overwrite existing pipeline."
@@ -73,30 +60,41 @@ if [[ -d "$TARGET/.agents" ]]; then
   fi
 fi
 
+# ── Fetch backstage ─────────────────────────────────────────────────
+step "Fetching backstage pipeline"
+
+TMPDIR=$(mktemp -d)
+trap 'rm -rf "$TMPDIR"' EXIT
+
+git clone --depth 1 --branch "$BRANCH" "$REPO_URL" "$TMPDIR/backstage" 2>&1 | tail -1
+log "Cloned backstage repo"
+
+SRC="$TMPDIR/backstage"
+
 # ── Copy pipeline files ─────────────────────────────────────────────
-step "Copying pipeline files"
+step "Installing pipeline files"
 
 # Core agent framework
-cp -r "$SCRIPT_DIR/.agents" "$TARGET/"
+cp -r "$SRC/.agents" "$TARGET/"
 log ".agents/ — agents, context, handoff schema, security, skills"
 
 # VS Code wiring
 mkdir -p "$TARGET/.github"
-cp -r "$SCRIPT_DIR/.github/agents" "$TARGET/.github/"
-cp -r "$SCRIPT_DIR/.github/skills" "$TARGET/.github/"
-cp "$SCRIPT_DIR/.github/copilot-instructions.md" "$TARGET/.github/"
+cp -r "$SRC/.github/agents" "$TARGET/.github/"
+cp -r "$SRC/.github/skills" "$TARGET/.github/"
+cp "$SRC/.github/copilot-instructions.md" "$TARGET/.github/"
 log ".github/ — VS Code agent wiring + skills"
 
 # Spec templates
-cp -r "$SCRIPT_DIR/.specs" "$TARGET/"
+cp -r "$SRC/.specs" "$TARGET/"
 log ".specs/ — epic, feature, and spec templates"
 
 # Pipeline infrastructure
-cp -r "$SCRIPT_DIR/.pipeline" "$TARGET/"
+cp -r "$SRC/.pipeline" "$TARGET/"
 log ".pipeline/ — checkpoint storage"
 
 # Root files
-cp "$SCRIPT_DIR/AGENTS.md" "$TARGET/"
+cp "$SRC/AGENTS.md" "$TARGET/"
 log "AGENTS.md — universal agent entry point"
 
 # Empty log file
@@ -148,22 +146,17 @@ fi
 # ── Git setup ────────────────────────────────────────────────────────
 step "Setting up git"
 
-cd "$TARGET"
-
 # Create develop branch if it doesn't exist
-CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "")
-
 if git rev-parse --verify develop >/dev/null 2>&1; then
   warn "develop branch already exists"
 elif git rev-parse HEAD >/dev/null 2>&1; then
-  # Repo has at least one commit — create develop from current HEAD
   git branch develop
   log "Created develop branch from current HEAD"
 else
   warn "No commits yet — develop branch will be created after initial commit"
 fi
 
-# Stage everything
+# Stage pipeline files
 git add \
   .agents/ \
   .github/agents/ \
@@ -193,23 +186,32 @@ Adds:
   log "Committed pipeline files"
 fi
 
-# Create develop if repo just got its first commit
+# Create develop if this was the first commit
 if ! git rev-parse --verify develop >/dev/null 2>&1; then
   git branch develop
   log "Created develop branch"
 fi
 
+# ── Clean up self ────────────────────────────────────────────────────
+# Remove this setup script from the target repo — it's not needed after install
+if [[ -f "$TARGET/setup.sh" ]]; then
+  rm "$TARGET/setup.sh"
+  git add -u setup.sh 2>/dev/null || true
+  git commit -m "chore: remove setup.sh after pipeline bootstrap" 2>/dev/null || true
+  log "Removed setup.sh — no longer needed"
+fi
+
 # ── Done ─────────────────────────────────────────────────────────────
 echo ""
-echo -e "${GREEN}${BOLD}✓ Backstage pipeline installed successfully${NC}"
+echo -e "${GREEN}${BOLD}✓ Backstage pipeline installed${NC}"
 echo ""
 echo -e "  ${BOLD}Next steps:${NC}"
 echo ""
-echo -e "  1. Open the repo in VS Code"
-echo -e "  2. Open Copilot chat → select ${CYAN}@init${NC} from agent dropdown"
+echo -e "  1. Open this repo in VS Code"
+echo -e "  2. Open Copilot chat → select ${CYAN}@init${NC} from the agent dropdown"
 echo -e "  3. Answer the product questions — creates system.md + stack.md"
 echo -e "  4. Switch to ${CYAN}@plan${NC} — decompose into specs"
-echo -e "  5. Type ${CYAN}@pipeline /run${NC} — watch the magic happen"
+echo -e "  5. Type ${CYAN}@pipeline /run${NC} and watch it go"
 echo ""
-echo -e "  Full docs: ${BOLD}AGENTS.md${NC} and ${BOLD}.agents/README.md${NC}"
+echo -e "  Docs: ${BOLD}AGENTS.md${NC} · ${BOLD}.agents/README.md${NC}"
 echo ""
