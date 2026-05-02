@@ -118,8 +118,7 @@ Recurring uncovered AC patterns suggest BA spec quality issues.
 
 ## Signals for architect review mode
 
-The following signals are available in `eval-signals.json` for the
-Architect Agent to process programmatically in review mode:
+The Architect Agent parses this report directly in review mode:
 
 - [N] patterns identified
 - [N] high priority

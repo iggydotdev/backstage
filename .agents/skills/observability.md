@@ -158,11 +158,10 @@ After every agent run (success or failure), commit the log:
 ```bash
 git add pipeline.log.ndjson
 git commit -m "log(agent-name): SPEC-NNN — event description"
-git push origin develop
+git push origin <current-feature-branch>
 ```
 
-The log is always committed to `develop`, not to the feature branch.
-The `handoff.json` stays on the feature branch. They are separate concerns.
+**CRITICAL:** The log is committed to the current active feature branch, just like `handoff.json`. It is only consolidated into `develop` during the final merge at the end of the pipeline. Do NOT checkout `develop` to commit logs mid-flight, as this creates race conditions when multiple specs are active.
 
 ---
 

@@ -158,96 +158,26 @@ UNTESTABLE_AC_PATTERN=$(grep across uncovered lists for common patterns)
 # → That epic's code may be touching shared code without awareness
 ```
 
-### Step 5 — Write eval-signals.json
-
-```json
-{
-  "generatedAt": "ISO8601",
-  "trigger": "auto | manual",
-  "specRange": { "from": "SPEC-001", "to": "SPEC-010" },
-  "totalSpecs": 10,
-
-  "summary": {
-    "redFirstPassRate": 0.7,
-    "greenFirstPassRate": 0.8,
-    "blueFirstPassRate": 0.9,
-    "qaFirstPassRate": 0.6,
-    "avgIterationsToGreen": 1.4,
-    "escalationRate": 0.1,
-    "avgDurationMinutes": 28,
-    "acUncoveredRate": 0.2,
-    "regressionRate": 0.1
-  },
-
-  "dodFailureFrequency": [
-    { "check": "R-3", "failures": 4, "rate": 0.4, "description": "False positive tests" },
-    { "check": "B-3", "failures": 3, "rate": 0.3, "description": "Lint warnings not cleared" },
-    { "check": "G-4", "failures": 2, "rate": 0.2, "description": "Test files modified during Green" }
-  ],
-
-  "patterns": [
-    {
-      "id": "PAT-001",
-      "type": "recurring_dod_failure",
-      "severity": "high",
-      "check": "R-3",
-      "rate": 0.4,
-      "description": "Red agent produces false positive tests in 40% of specs",
-      "suggestedAction": "Strengthen Red agent instructions on assertion specificity. Consider adding examples of tight vs loose assertions to context.",
-      "targetAgent": "red",
-      "targetFile": ".agents/agents/developer/red.md"
-    },
-    {
-      "id": "PAT-002",
-      "type": "untestable_acs",
-      "severity": "medium",
-      "rate": 0.2,
-      "description": "20% of specs have at least one uncovered AC after Red phase",
-      "suggestedAction": "BA agent AC format may need tightening. Review uncovered ACs for Given/When/Then compliance.",
-      "targetAgent": "ba",
-      "targetFile": ".agents/agents/ba.md"
-    },
-    {
-      "id": "PAT-003",
-      "type": "qa_design_fidelity",
-      "severity": "low",
-      "rate": 0.3,
-      "description": "QA finds minor design fidelity issues in 30% of specs",
-      "suggestedAction": "Verify fetch-figma-nodes is returning complete token data. Check if Figma MCP partial flag is being set silently.",
-      "targetAgent": "pipeline-orchestrator",
-      "targetFile": ".agents/skills/atoms/fetch-figma-nodes.md"
-    }
-  ],
-
-  "archiveTrigger": {
-    "architectReviewRecommended": true,
-    "reason": "escalationRate > 0.1 and redFirstPassRate < 0.8",
-    "priority": "high | medium | low"
-  }
-}
-```
-
-### Step 6 — Write eval-report.md
+### Step 5 — Write eval-report.md
 
 Write to `.agents/context/eval-report.md`.
 This file is overwritten on every eval run — it always reflects the
 most recent evaluation window.
 
-See the eval-report.md template for the exact format.
+See the `eval-report.md` template for the exact format. Ensure all patterns identified above are clearly documented in the Patterns section.
 
-### Step 7 — Commit both outputs
+### Step 6 — Commit output
 
 ```bash
-git checkout develop
+# Wait for the next human merge to push this, or commit directly if on a dedicated evaluation branch
 git add .agents/context/eval-report.md
-git add .agents/context/eval-signals.json  # if storing signals in repo
 git commit -m "chore(eval): pipeline eval — SPEC-001 through SPEC-010"
-git push origin develop
+# (Depends on team merging strategy, but the file must be committed)
 ```
 
 Log a `pipeline_eval_complete` info event to `pipeline.log.ndjson`.
 
-### Step 8 — Notify architect if review recommended
+### Step 7 — Notify architect if review recommended
 
 If `archiveTrigger.architectReviewRecommended == true`:
 - Append to `.agents/context/CHANGELOG.md`:

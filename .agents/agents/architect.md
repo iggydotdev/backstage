@@ -165,16 +165,16 @@ Never overwrite — always append. One concern per note.
 ## Reading eval signals in review mode
 
 When running in Mode B (review), the Architect Agent reads
-`.agents/context/eval-signals.json` before reading `.specs/done/`.
+`.agents/context/eval-report.md` before reading `.specs/done/`.
 
 Eval signals are the primary input for deciding what to update.
 Do not ignore them in favour of only reading completed spec files.
 
 ### Processing signals
 
-For each pattern in `eval-signals.patterns`:
+For each pattern listed in `eval-report.md` under Patterns Identified:
 
-1. Read `pattern.suggestedAction` and `pattern.targetFile`
+1. Read the suggested action and target file
 2. Open the target file
 3. Determine if the suggested action maps to a concrete change:
    - Agent instruction that needs strengthening

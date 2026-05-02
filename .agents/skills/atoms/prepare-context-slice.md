@@ -287,7 +287,22 @@ If a source file is missing:
 - Log `warn` event: `context_source_missing`
 - Omit that field from the slice — do not fail
 
-### Step 4 — Write to handoff
+### 🚨 Step 4 — Shortcode guard check
+Before writing the slice, verify no unresolved shortcodes remain in the output:
+
+```bash
+if echo "$SLICE_CONTENT" | grep -q '\[[A-Z_]\+\]'; then
+  # e.g., [TEST_COMMAND], [STACK]
+  # HALT immediately. Do not write slice.
+  echo "Error: Unresolved shortcodes found in context. Run @init first."
+  # Log error event: "context_unresolved_shortcodes"
+  exit 1
+fi
+```
+
+This ensures agents never attempt to execute raw placeholders if the @init phase was bypassed.
+
+### Step 5 — Write to handoff
 ```json
 "contextSlice": {
   "preparedFor": "red",
