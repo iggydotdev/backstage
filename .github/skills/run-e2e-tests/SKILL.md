@@ -16,6 +16,9 @@ Read from `handoff.json`:
 - `design.figmaNodes` — visual reference
 - `branch.name` — branch under test
 - `contextSlice.testingCommands.e2eCommand` — the e2e command to run
+- `contextSlice.testingCommands.devServerCommand`
+- `contextSlice.testingCommands.e2eBaseUrl`  
+- `contextSlice.testingCommands.seedCommand`
 
 ## Step 1 — Confirm environment
 Before running tests, verify:
