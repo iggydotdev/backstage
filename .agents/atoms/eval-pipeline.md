@@ -195,7 +195,7 @@ UNTESTABLE_AC_PATTERN=$(grep across uncovered lists for common patterns)
       "description": "Red agent produces false positive tests in 40% of specs",
       "suggestedAction": "Strengthen Red agent instructions on assertion specificity. Consider adding examples of tight vs loose assertions to context.",
       "targetAgent": "red",
-      "targetFile": ".agents/agents/developer/red.md"
+      "targetFile": ".agents/molecules/red.md"
     },
     {
       "id": "PAT-002",
@@ -205,7 +205,7 @@ UNTESTABLE_AC_PATTERN=$(grep across uncovered lists for common patterns)
       "description": "20% of specs have at least one uncovered AC after Red phase",
       "suggestedAction": "BA agent AC format may need tightening. Review uncovered ACs for Given/When/Then compliance.",
       "targetAgent": "ba",
-      "targetFile": ".agents/agents/ba.md"
+      "targetFile": ".agents/molecules/ba.md"
     },
     {
       "id": "PAT-003",
@@ -214,8 +214,8 @@ UNTESTABLE_AC_PATTERN=$(grep across uncovered lists for common patterns)
       "rate": 0.3,
       "description": "QA finds minor design fidelity issues in 30% of specs",
       "suggestedAction": "Verify fetch-figma-nodes is returning complete token data. Check if Figma MCP partial flag is being set silently.",
-      "targetAgent": "pipeline-orchestrator",
-      "targetFile": ".agents/skills/atoms/fetch-figma-nodes.md"
+      "targetAgent": "pipeline",
+      "targetFile": ".agents/atoms/fetch-figma-nodes.md"
     }
   ],
 

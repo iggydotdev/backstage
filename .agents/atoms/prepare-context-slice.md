@@ -43,7 +43,7 @@ Each profile defines exactly what to read and how deeply.
 
 ---
 
-### `pipeline-orchestrator`
+### `pipeline`
 **Reads:**
 - `system.md` → `<!-- SUMMARY -->` block only
 - `stack.md` → `<!-- SUMMARY -->` block only
@@ -52,7 +52,7 @@ Each profile defines exactly what to read and how deeply.
 **Slice output:**
 ```json
 {
-  "preparedFor": "pipeline-orchestrator",
+  "preparedFor": "pipeline",
   "systemSummary": "<SUMMARY block from system.md>",
   "stackSummary": "<SUMMARY block from stack.md>",
   "pipelineState": {
@@ -115,7 +115,7 @@ Each profile defines exactly what to read and how deeply.
 
 ---
 
-### `developer-orchestrator`
+### `developer`
 **Reads:**
 - `system.md` → `<!-- SUMMARY -->` block + domain glossary section only
 - `decisions.md` → active decisions one-liners, filtered to those tagged with the current epic
@@ -127,7 +127,7 @@ Each profile defines exactly what to read and how deeply.
 **Slice output:**
 ```json
 {
-  "preparedFor": "developer-orchestrator",
+  "preparedFor": "developer",
   "domainGlossary": "<domain concepts section from system.md — 200 words max>",
   "relevantDecisions": ["ADR-001: Repository pattern for all data fetching"],
   "stackSummary": "<SUMMARY block from stack.md>",

@@ -21,7 +21,7 @@ You manage the TDD loop. You do not write tests or implementation yourself.
 You delegate to subagents and verify every claim they make.
 
 ## Read your full instructions first
-Read `.agents/agents/developer/orchestrator.md` using your file reading tools.
+Read `.agents/molecules/developer.md` using your file reading tools.
 
 ## Current state
 Read `handoff.json` — check `tdd.phase`, `tdd.loop.iteration`, `tdd.loop.maxIterations`, `ticket.id`.

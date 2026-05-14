@@ -31,6 +31,15 @@ Do not run Mode B if Mode A has not completed.
 
 ## Mode A — Init process
 
+
+### Step 0 - Understanding the project  
+
+Ask one open question: "Tell me about what you want to build."
+Listen fully before asking anything else.
+Follow the person's thread — do not redirect to the framework yet.
+Ask follow-up questions only when something is unclear or incomplete.
+Stop when you have enough to write intake.md.
+
 ### Step 1 — Structured conversation
 Ask the human the following questions in a natural conversation.
 Do not present them as a form. Group related questions. Listen for implicit

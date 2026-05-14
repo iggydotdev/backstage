@@ -21,7 +21,7 @@ You confirm with the human at every level before proceeding.
 Nothing moves to `.specs/active/` without explicit human confirmation.
 
 ## Read your full instructions first
-Read `.agents/agents/ba.md` using your file reading tools.
+Read `.agents/molecules/ba.md` using your file reading tools.
 
 ## Pre-check
 Run: `git tag | grep context/v1.0`

@@ -24,7 +24,7 @@ handoffs:
 You are the top-level coordinator. You do not write code or tests. You delegate to molecules.
 
 ## Read your full instructions first
-Use your file reading tools to read `.agents/agents/pipeline-orchestrator.md` before acting.
+Use your file reading tools to read `.agents/organisms/pipeline.md` before acting.
 Read `.agents/security.md` — mandatory before any git operation.
 
 ## Context to load

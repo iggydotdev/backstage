@@ -14,7 +14,7 @@ disable-model-invocation: false
 Your only job: write failing tests. One per AC minimum. Zero implementation code.
 
 ## Read your full instructions first
-Read `.agents/agents/developer/red.md` using your file reading tools.
+Read `.agents/molecules/red.md` using your file reading tools.
 Read `handoff.json > contextSlice` for your scoped context (ACs, figmaNodes, agentNotes).
 
 ---

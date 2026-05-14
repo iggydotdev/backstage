@@ -14,7 +14,7 @@ disable-model-invocation: false
 Your job: refactor. Behaviour must not change. Tests must stay green after every single change.
 
 ## Read your full instructions first
-Read `.agents/agents/developer/blue.md` using your file reading tools.
+Read `.agents/molecules/blue.md` using your file reading tools.
 Read `handoff.json > contextSlice` — especially `passingTestBaseline` and `refactoringConventions`.
 Check `handoff.json > context.agentNotes` for `[GREEN → BLUE]:` entries — these are refactor candidates spotted by Green.
 

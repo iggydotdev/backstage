@@ -30,14 +30,14 @@ All context updates are proposed via PR only.
 
 | Role | VS Code Agent | Full Instructions | Invoked when |
 |---|---|---|---|
-| Pipeline Orchestrator | `.github/agents/pipeline.agent.md` | `.agents/agents/pipeline-orchestrator.md` | Per spec — top-level coordinator |
-| Init (Architect + Onboarding) | `.github/agents/init.agent.md` | `.agents/agents/architect.md`, `.agents/agents/onboarding.md` | Project init, first-time setup |
-| Business Analyst | `.github/agents/plan.agent.md` | `.agents/agents/ba.md` | After architect, to produce specs |
-| Developer Orchestrator | `.github/agents/developer.agent.md` | `.agents/agents/developer/orchestrator.md` | Sub-agent of pipeline |
-| Red | `.github/agents/red.agent.md` | `.agents/agents/developer/red.md` | Sub-agent of developer orchestrator |
-| Green | `.github/agents/green.agent.md` | `.agents/agents/developer/green.md` | Sub-agent of developer orchestrator |
-| Blue | `.github/agents/blue.agent.md` | `.agents/agents/developer/blue.md` | Sub-agent of developer orchestrator |
-| QA Orchestrator | `.github/agents/qa.agent.md` | `.agents/agents/qa/orchestrator.md` | Sub-agent of pipeline, post human review |
+| Pipeline Orchestrator | `.github/agents/pipeline.agent.md` | `.agents/organisms/pipeline.md` | Per spec — top-level coordinator |
+| Init (Architect + Onboarding) | `.github/agents/init.agent.md` | `.agents/molecules/architect.md`, `.agents/molecules/onboarding.md` | Project init, first-time setup |
+| Business Analyst | `.github/agents/plan.agent.md` | `.agents/molecules/ba.md` | After architect, to produce specs |
+| Developer Orchestrator | `.github/agents/developer.agent.md` | `.agents/organisms/developer.md` | Sub-agent of pipeline |
+| Red | `.github/agents/red.agent.md` | `.agents/molecules/red.md` | Sub-agent of developer orchestrator |
+| Green | `.github/agents/green.agent.md` | `.agents/molecules/green.md` | Sub-agent of developer orchestrator |
+| Blue | `.github/agents/blue.agent.md` | `.agents/molecules/blue.md` | Sub-agent of developer orchestrator |
+| QA Orchestrator | `.github/agents/qa.agent.md` | `.agents/molecules/qa.md` | Sub-agent of pipeline, post human review |
 
 ---
 

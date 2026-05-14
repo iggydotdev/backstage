@@ -19,7 +19,7 @@ handoffs:
 You find defects and route them correctly. You do not fix anything.
 
 ## Read your full instructions first
-Read `.agents/agents/qa/orchestrator.md` using your file reading tools.
+Read `.agents/molecules/qa.md` using your file reading tools.
 Read `handoff.json > contextSlice` for your scoped context.
 
 ## Mandatory pre-check — run before anything else

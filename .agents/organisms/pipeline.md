@@ -69,7 +69,7 @@ components), do not proceed. Flag the spec back to the BA agent with a
 clear description of what is missing.
 
 ### Step 3 — Create the feature branch
-Invoke skill: `.agents/skills/atoms/create-branch.md`
+Invoke skill: `.agents/atoms/create-branch.md`
 
 ```
 Input:
@@ -101,7 +101,7 @@ If Figma MCP is unavailable:
 - Do not block the pipeline for a Figma outage
 
 ### Step 5 — Build handoff.json
-Invoke skill: `.agents/skills/atoms/build-handoff.md`
+Invoke skill: `.agents/atoms/build-handoff.md`
 
 Combines spec data + Figma data into the full `handoff.json` structure.
 Commits `handoff.json` to the feature branch:
@@ -111,7 +111,7 @@ git commit -m "chore(pipeline): SPEC-NNN — initialise handoff"
 ```
 
 ### Step 6 — Invoke Developer Orchestrator
-Pass control to `.agents/agents/developer/orchestrator.md`.
+Pass control to `.agents/organisms/developer.md`.
 
 The developer orchestrator runs its full TDD loop and either:
 - Opens a draft PR and halts (success path)
@@ -137,7 +137,7 @@ Resume when one of these conditions is true (check `handoff.json`):
 - Return to Step 7 when the updated PR is ready
 
 ### Step 8 — Invoke QA Orchestrator
-Pass control to `.agents/agents/qa/orchestrator.md`.
+Pass control to `.agents/molecules/qa.md`.
 
 QA orchestrator runs its full suite and either:
 - Sets `ticket.status = "done"` (pass)
@@ -167,7 +167,7 @@ git push origin --delete feature/SPEC-NNN-slug
 Append final audit entry to `handoff.json` before merge.
 
 ### Step 10 — Archive spec
-Invoke skill: `.agents/skills/atoms/archive-spec.md`
+Invoke skill: `.agents/atoms/archive-spec.md`
 
 ```bash
 mv .specs/active/SPEC-NNN-slug.md .specs/done/SPEC-NNN-slug.md
@@ -211,8 +211,8 @@ and `handoff.json`:
 
 | State | Resume at |
 |---|---|
-| `tdd.phase = null or "red"` | Step 6 — Developer Orchestrator |
-| `tdd.phase = "green" or "blue"` | Step 6 — Developer Orchestrator |
+| `tdd.phase = null or "red"` | Step 6 — Developer |
+| `tdd.phase = "green" or "blue"` | Step 6 — Developer |
 | `tdd.phase = "complete"`, `ticket.status = "pr_draft"` | Step 7 — Await human review |
 | `humanReview.status = "approved"` | Step 8 — QA |
 | `ticket.status = "done"` | Step 9 — Merge |
@@ -225,7 +225,7 @@ Append to `handoff.json > audit` on every state transition:
 ```json
 {
   "timestamp": "<ISO8601>",
-  "agent": "pipeline-orchestrator",
+  "agent": "pipeline",
   "action": "short description of what happened",
   "result": "success | failure | halted | escalated",
   "iteration": 0
@@ -248,8 +248,8 @@ Also append a summary entry to `.agents/context/CHANGELOG.md`:
 - Stack: `.agents/context/stack.md`
 - Decisions: `.agents/context/decisions.md`
 - Branch base: always `develop`
-- Max developer iterations: 3 (enforced by developer orchestrator)
-- Max QA runs: 3 (enforced by QA orchestrator)
+- Max developer iterations: 3 (enforced by developer)
+- Max QA runs: 3 (enforced by QA)
 - Architect review threshold: every 10 specs or on epic completion
 
 ---
@@ -289,11 +289,11 @@ If re-triggered for a spec that already has a feature branch:
 ## Context slice preparation
 
 Before invoking **any** agent or sub-agent, the pipeline orchestrator
-must call `skills/atoms/prepare-context-slice.md` with the target role.
+must call `.agents/atoms/prepare-context-slice.md` with the target role.
 
 ```
-BEFORE invoking Developer Orchestrator:
-  → prepare-context-slice(targetAgent: "developer-orchestrator")
+BEFORE invoking Developer:
+  → prepare-context-slice(targetAgent: "developer")
 
 BEFORE invoking Red Agent:
   → prepare-context-slice(targetAgent: "red")
@@ -304,7 +304,7 @@ BEFORE invoking Green Agent:
 BEFORE invoking Blue Agent:
   → prepare-context-slice(targetAgent: "blue")
 
-BEFORE invoking QA Orchestrator:
+BEFORE invoking QA:
   → prepare-context-slice(targetAgent: "qa")
 ```
 
@@ -336,7 +336,7 @@ Never overwrite — always append. One concern per note.
 
 ## Eval auto-trigger
 
-After every call to `skills/atoms/archive-spec.md`, check whether
+After every call to `/atoms/archive-spec.md`, check whether
 eval should run automatically.
 
 ```bash

@@ -18,7 +18,6 @@ handoffs:
 # Init Agent — Architect Elicitation + Onboarding
 
 You run project initialisation in two sequential phases.
-Read `.agents/agents/architect.md` and `.agents/agents/onboarding.md` for full instructions.
 
 ---
 

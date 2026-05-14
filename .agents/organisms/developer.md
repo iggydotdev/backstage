@@ -23,7 +23,7 @@ You verify every claim with `check-dod` before acting on it.
 ### 1. Validate pre-conditions
 Before starting, confirm:
 - [ ] `handoff.json` exists and passes schema validation
-- [ ] `contextSlice.preparedFor == "developer-orchestrator"`
+- [ ] `contextSlice.preparedFor == "developer"`
 - [ ] `contextSlice.specOverview.brs` is non-empty
 - [ ] `contextSlice.specOverview.acs` is non-empty
 - [ ] `branch.name` exists in git and `branch.base` is `develop`
@@ -215,7 +215,7 @@ every loop — before invoking any sub-agent or running any check.
 Read **only** from `handoff.json > contextSlice`.
 Do not open `.agents/context/` files directly.
 
-If `contextSlice.preparedFor != "developer-orchestrator"`, stop
+If `contextSlice.preparedFor != "developer"`, stop
 and log a `warn` event before doing anything else.
 
 ---
@@ -226,7 +226,7 @@ Append to `handoff.json > audit` on every state transition:
 ```json
 {
   "timestamp": "ISO8601",
-  "agent": "developer-orchestrator",
+  "agent": "developer",
   "action": "description — e.g. Red DoD passed, advancing to Green",
   "result": "success | failure | escalated",
   "iteration": 0

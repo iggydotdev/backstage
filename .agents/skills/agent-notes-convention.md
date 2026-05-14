@@ -3,7 +3,7 @@
 The canonical specification for writing to and reading from
 `handoff.json > context.agentNotes`.
 
-Referenced by all agents and by `skills/atoms/prepare-context-slice.md`.
+Referenced by all agents and by `.agents/atoms/prepare-context-slice.md`.
 
 ---
 
@@ -32,14 +32,14 @@ The agent or skill that wrote the note. One of:
 
 | Token | Agent |
 |---|---|
-| `PIPELINE` | Pipeline Orchestrator |
-| `DEV-ORCH` | Developer Orchestrator |
-| `RED` | Red Agent |
-| `GREEN` | Green Agent |
-| `BLUE` | Blue Agent |
-| `QA` | QA Orchestrator |
-| `BA` | BA Agent |
-| `ARCHITECT` | Architect Agent |
+| `PIPELINE` | Pipeline |
+| `DEV-ORCH` | Developer |
+| `RED` | Red |
+| `GREEN` | Green |
+| `BLUE` | Blue |
+| `QA` | QA |
+| `BA` | BA |
+| `ARCHITECT` | Architect |
 | `CHECK-DOD` | check-dod atom |
 | `CONTEXT-SLICE` | prepare-context-slice atom |
 | `FIGMA` | fetch-figma-nodes atom |

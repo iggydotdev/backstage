@@ -33,31 +33,35 @@ root/
     │   ├── stack.md                     ← onboarding: stack + conventions
     │   ├── domain.md                    ← onboarding: project knowledge
     │   └── CHANGELOG.md                 ← every context change, versioned
-    ├── agents/
-    │   ├── pipeline-orchestrator.md     ← top-level per-spec coordinator
+    ├── atoms/
+    │   ├── archive-spec.md
+    │   ├── build-handoff.md
+    │   ├── check-dod.md
+    │   ├── create-branch.md
+    │   ├── create-regression-ticket.md
+    │   ├── eval-pipeline.md
+    │   ├── fetch-figma-nodes.md
+    │   ├── prepare-context-slice.md
+    │   ├── recover-pipeline.md
+    │   └── run-e2e-tests.md
+    │   
+    ├── molecules/
     │   ├── architect.md                 ← system vision, domain, decisions
     │   ├── ba.md                        ← epics → features → specs
     │   ├── onboarding.md                ← resolves [SHORTCODES], runs once
-    │   ├── developer/
-    │   │   ├── orchestrator.md          ← TDD lifecycle manager
-    │   │   ├── red.md                   ← writes failing tests
-    │   │   ├── green.md                 ← writes minimal implementation
-    │   │   └── blue.md                  ← refactors implementation
-    │   └── qa/
-    │       └── orchestrator.md          ← validates ACs, routes defects
+    │   ├── red.md                   ← writes failing tests
+    │   ├── green.md                 ← writes minimal implementation
+    │   ├── blue.md                  ← refactors implementation
+    |   └── qa.md          ← validates ACs, routes defects
+    ├── organisms/
+    │   ├── developer.md          ← TDD lifecycle manager
+    │   └── pipeline-orchestrator.md     ← top-level per-spec coordinator
+    │   
     └── skills/
         ├── observability.md             ← event schema, log format, checkpoints
         ├── definition-of-done.md        ← canonical DoD checklist per phase
         ├── agent-notes-convention.md    ← tagging format for agentNotes field
-        ├── error-handling.md            ← failure classification, retry, recovery
-        └── atoms/
-            ├── create-branch.md
-            ├── fetch-figma-nodes.md
-            ├── build-handoff.md
-            ├── archive-spec.md
-            ├── recover-pipeline.md      ← diagnose + restore broken runs
-            ├── run-e2e-tests.md
-            └── create-regression-ticket.md
+        └── error-handling.md            ← failure classification, retry, recovery   
 ```
 
 ---
@@ -141,7 +145,7 @@ All agents follow `.agents/skills/error-handling.md`:
 
 To recover a broken run:
 ```
-→ Invoke skills/atoms/recover-pipeline.md with the spec ID
+→ Invoke .agents/atoms/recover-pipeline.md with the spec ID
 → Follow the recovery proposal
 ```
 

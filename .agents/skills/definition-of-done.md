@@ -4,7 +4,7 @@ The canonical, binary checklist the developer orchestrator verifies
 before accepting any phase transition. Every check must pass. There
 are no partial passes — a phase is done or it is not.
 
-Checks are run by the `skills/atoms/check-dod.md` atom.
+Checks are run by the `.agents/atoms/check-dod.md` atom.
 They are deterministic — git, shell, and file system operations only.
 No LLM judgment. No self-certification.
 

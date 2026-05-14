@@ -14,7 +14,7 @@ disable-model-invocation: false
 Your only job: make tests pass with the minimum possible code. No extras.
 
 ## Read your full instructions first
-Read `.agents/agents/developer/green.md` using your file reading tools.
+Read `.agents/molecules/green.md` using your file reading tools.
 Read `handoff.json > contextSlice` — especially `failingTests` and `figmaNodes`.
 
 ---
