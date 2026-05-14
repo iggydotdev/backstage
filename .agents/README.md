@@ -55,7 +55,7 @@ root/
     |   └── qa.md          ← validates ACs, routes defects
     ├── organisms/
     │   ├── developer.md          ← TDD lifecycle manager
-    │   └── pipeline-orchestrator.md     ← top-level per-spec coordinator
+    │   └── pipeline.md              ← top-level per-spec coordinator
     │   
     └── skills/
         ├── observability.md             ← event schema, log format, checkpoints
@@ -78,13 +78,13 @@ BA Agent
 Onboarding Agent
   → stack.md, [SHORTCODE] resolution
       ↓
-Pipeline Orchestrator  ←──── recover-pipeline (on error)
+Pipeline  ←──── recover-pipeline (on error)
   → create-branch
   → fetch-figma-nodes
   → build-handoff → handoff.json
   → checkpoint ✓
       ↓
-Developer Orchestrator
+Developer
   → Red → Green → Blue (≤3 iterations)
   → checkpoint after each passing phase ✓
   → Draft PR
@@ -92,7 +92,7 @@ Developer Orchestrator
 ⏸ Human Review
   → checkpoint on approval ✓
       ↓
-QA Orchestrator (≤3 runs)
+QA (≤3 runs)
   → run-e2e-tests
   → classify + route defects
   → checkpoint on pass ✓
@@ -164,21 +164,21 @@ BA Agent
   → confirmed specs to .specs/active/
 
 [Per spec — automated]
-Pipeline Orchestrator
+Pipeline
   1.  Validate preconditions
   2.  Pick next eligible spec
   3.  create-branch
   4.  fetch-figma-nodes (degrades gracefully if unavailable)
   5.  build-handoff → commit handoff.json
   6.  checkpoint: handoff_initialised ✓
-  7.  Developer Orchestrator (≤3 iterations)
+  7.  Developer (≤3 iterations)
       → Red → Green (checkpoint: tests_passing ✓) → Blue
       → checkpoint: refactor_complete ✓
       → Draft PR
   8.  ⏸ Human review
-      → changes: re-invoke Developer Orchestrator
+      → changes: re-invoke Developer
       → approved: checkpoint: pr_approved ✓
-  9.  QA Orchestrator (≤3 runs)
+  9.  QA (≤3 runs)
       → pass: checkpoint: qa_passed ✓
       → fail (new code): re-invoke Developer → back to step 8
       → fail (pre-existing): create-regression-ticket (non-blocking)
@@ -236,10 +236,10 @@ Agent runs with exactly the right information
 
 | Agent | Gets |
 |---|---|
-| pipeline-orchestrator | System summary + pipeline state |
+| pipeline | System summary + pipeline state |
 | architect | Full system.md + decisions.md |
 | ba | Full system.md + active decisions one-liners + epic/feature status |
-| developer-orchestrator | Domain glossary + relevant decisions + spec overview |
+| developer | Domain glossary + relevant decisions + spec overview |
 | red | Domain glossary + test conventions + ACs + figmaNodes |
 | green | Domain glossary + full stack + failing tests + figmaNodes |
 | blue | Domain glossary + refactoring conventions + passing test baseline |

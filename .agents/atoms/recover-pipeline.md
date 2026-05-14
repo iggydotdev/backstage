@@ -1,7 +1,7 @@
 # Skill: Recover Pipeline
 
 **Type:** Atom
-**Used by:** Human-triggered, or Pipeline Orchestrator on resume
+**Used by:** Human-triggered, or Pipeline on resume
 **Trigger:** A pipeline run is in an unknown, halted, or corrupt state
 
 ---
@@ -45,7 +45,7 @@ git fetch origin
 git show origin/feature/SPEC-001-slug:handoff.json 2>/dev/null || echo "NOT FOUND"
 ```
 
-Validate `handoff.json` per the validation rules in `skills/error-handling.md`.
+Validate `handoff.json` per the validation rules in `.agents/skills/error-handling.md`.
 
 Record:
 - `tdd.phase`
@@ -88,7 +88,7 @@ Last good state:
 
 Failure:
   Event:     loop_limit_reached
-  Agent:     developer-orchestrator
+  Agent:     developer
   Phase:     blue
   Detail:    "TypeScript error in Button.tsx cannot be resolved
               without changing component interface"
@@ -122,7 +122,7 @@ Action: Restore from checkpoint SPEC-001-abc123 and re-run from
         the blue phase.
 
 To proceed:
-  Re-trigger the pipeline orchestrator for SPEC-001.
+  Re-trigger the pipeline agent for SPEC-001.
   It will restore the checkpoint automatically and continue.
 ─────────────────────────────────────────
 ```
@@ -139,13 +139,13 @@ was at: tests_passing (green phase complete).
 
 Action: Restore SPEC-001-abc123.json as handoff.json,
         reset tdd.phase to "blue", reset iteration to 0,
-        and re-invoke the developer orchestrator.
+        and re-invoke the developer agent.
 
 This restores the passing test state and gives the blue agent
 a fresh attempt at refactoring.
 
 To proceed:
-  Re-trigger the pipeline orchestrator for SPEC-001.
+  Re-trigger the pipeline agent for SPEC-001.
   Confirm you want to restore from checkpoint abc123.
 ─────────────────────────────────────────
 ```
@@ -166,12 +166,12 @@ What you need to do:
 
 After fixing:
   Option 1 — If the spec changed: update SPEC-001.md, then
-             re-trigger the pipeline orchestrator. It will restart
+             re-trigger the pipeline agent. It will restart
              from the handoff_initialised checkpoint.
 
   Option 2 — If only the code needs a fix: push your fix to
              feature/SPEC-001-login-form-component, then
-             re-trigger the pipeline orchestrator. It will
+             re-trigger the pipeline agent. It will
              resume from the pr_approved checkpoint.
 ─────────────────────────────────────────
 ```
@@ -190,7 +190,7 @@ Recommended action:
   1. Close PR #12 (do not merge)
   2. Delete branch: git push origin --delete feature/SPEC-001-login-form-component
   3. Move SPEC-001 back to .specs/active/ if it was modified
-  4. Re-trigger the pipeline orchestrator for a fresh run
+  4. Re-trigger the pipeline agent for a fresh run
 
 Root cause to investigate before restarting:
   [Summary of what went wrong based on the log]

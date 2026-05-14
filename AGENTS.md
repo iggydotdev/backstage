@@ -30,34 +30,34 @@ All context updates are proposed via PR only.
 
 | Role | VS Code Agent | Full Instructions | Invoked when |
 |---|---|---|---|
-| Pipeline Orchestrator | `.github/agents/pipeline.agent.md` | `.agents/organisms/pipeline.md` | Per spec — top-level coordinator |
+| Pipeline | `.github/agents/pipeline.agent.md` | `.agents/organisms/pipeline.md` | Per spec — top-level coordinator |
 | Init (Architect + Onboarding) | `.github/agents/init.agent.md` | `.agents/molecules/architect.md`, `.agents/molecules/onboarding.md` | Project init, first-time setup |
 | Business Analyst | `.github/agents/plan.agent.md` | `.agents/molecules/ba.md` | After architect, to produce specs |
-| Developer Orchestrator | `.github/agents/developer.agent.md` | `.agents/organisms/developer.md` | Sub-agent of pipeline |
-| Red | `.github/agents/red.agent.md` | `.agents/molecules/red.md` | Sub-agent of developer orchestrator |
-| Green | `.github/agents/green.agent.md` | `.agents/molecules/green.md` | Sub-agent of developer orchestrator |
-| Blue | `.github/agents/blue.agent.md` | `.agents/molecules/blue.md` | Sub-agent of developer orchestrator |
-| QA Orchestrator | `.github/agents/qa.agent.md` | `.agents/molecules/qa.md` | Sub-agent of pipeline, post human review |
+| Developer | `.github/agents/developer.agent.md` | `.agents/organisms/developer.md` | Sub-agent of pipeline |
+| Red | `.github/agents/red.agent.md` | `.agents/molecules/red.md` | Sub-agent of developer |
+| Green | `.github/agents/green.agent.md` | `.agents/molecules/green.md` | Sub-agent of developer |
+| Blue | `.github/agents/blue.agent.md` | `.agents/molecules/blue.md` | Sub-agent of developer |
+| QA | `.github/agents/qa.agent.md` | `.agents/molecules/qa.md` | Sub-agent of pipeline, post human review |
 
 ---
 
 ## Atomic skills
 
 Skills are single-purpose tools invoked by agents. They are loaded automatically by
-VS Code from `.github/skills/`. Full source definitions live in `.agents/skills/atoms/`.
+VS Code from `.github/skills/`. Full source definitions live in `.agents/atoms/`.
 
 | Skill | VS Code Skill | Full Source | Used by |
 |---|---|---|---|
-| Create branch | `.github/skills/create-branch/SKILL.md` | `.agents/skills/atoms/create-branch.md` | Pipeline Orchestrator |
-| Fetch Figma nodes | `.github/skills/fetch-figma-nodes/SKILL.md` | `.agents/skills/atoms/fetch-figma-nodes.md` | Pipeline Orchestrator |
-| Build handoff | `.github/skills/build-handoff/SKILL.md` | `.agents/skills/atoms/build-handoff.md` | Pipeline Orchestrator |
-| Archive spec | `.github/skills/archive-spec/SKILL.md` | `.agents/skills/atoms/archive-spec.md` | Pipeline Orchestrator |
-| Check DoD | `.github/skills/check-dod/SKILL.md` | `.agents/skills/atoms/check-dod.md` | Developer Orchestrator |
-| Prepare context slice | `.github/skills/prepare-context-slice/SKILL.md` | `.agents/skills/atoms/prepare-context-slice.md` | Pipeline Orchestrator |
-| Recover pipeline | `.github/skills/recover-pipeline/SKILL.md` | `.agents/skills/atoms/recover-pipeline.md` | Pipeline Orchestrator |
-| Eval pipeline | `.github/skills/eval-pipeline/SKILL.md` | `.agents/skills/atoms/eval-pipeline.md` | Pipeline Orchestrator |
-| Run e2e tests | `.github/skills/run-e2e-tests/SKILL.md` | `.agents/skills/atoms/run-e2e-tests.md` | QA Orchestrator |
-| Create regression ticket | `.github/skills/create-regression-ticket/SKILL.md` | `.agents/skills/atoms/create-regression-ticket.md` | QA Orchestrator |
+| Create branch | `.github/skills/create-branch/SKILL.md` | `.agents/atoms/create-branch.md` | Pipeline |
+| Fetch Figma nodes | `.github/skills/fetch-figma-nodes/SKILL.md` | `.agents/atoms/fetch-figma-nodes.md` | Pipeline |
+| Build handoff | `.github/skills/build-handoff/SKILL.md` | `.agents/atoms/build-handoff.md` | Pipeline |
+| Archive spec | `.github/skills/archive-spec/SKILL.md` | `.agents/atoms/archive-spec.md` | Pipeline |
+| Check DoD | `.github/skills/check-dod/SKILL.md` | `.agents/atoms/check-dod.md` | Developer |
+| Prepare context slice | `.github/skills/prepare-context-slice/SKILL.md` | `.agents/atoms/prepare-context-slice.md` | Pipeline |
+| Recover pipeline | `.github/skills/recover-pipeline/SKILL.md` | `.agents/atoms/recover-pipeline.md` | Pipeline |
+| Eval pipeline | `.github/skills/eval-pipeline/SKILL.md` | `.agents/atoms/eval-pipeline.md` | Pipeline |
+| Run e2e tests | `.github/skills/run-e2e-tests/SKILL.md` | `.agents/atoms/run-e2e-tests.md` | QA |
+| Create regression ticket | `.github/skills/create-regression-ticket/SKILL.md` | `.agents/atoms/create-regression-ticket.md` | QA |
 
 ---
 
@@ -69,14 +69,14 @@ Architect → BA → Onboarding
        produce context + specs
 
 [Per spec — automated]
-Pipeline Orchestrator
+Pipeline
   ├─ create-branch
   ├─ fetch-figma-nodes
   ├─ build-handoff → handoff.json
-  ├─ Developer Orchestrator
+  ├─ Developer
   │    └─ Red → Green → Blue → Draft PR
   ├─ ⏸ Human Review
-  ├─ QA Orchestrator
+  ├─ QA
   │    └─ e2e + AC validation + defect routing
   ├─ Merge → develop
   └─ archive-spec → .specs/done/
@@ -103,7 +103,7 @@ Specs are the pipeline's input. They live in `.specs/`.
 Flow: `draft → confirmed by human → active/ → pipeline → done/`
 
 Only the BA agent (with human sign-off) moves specs to `active/`.
-Only the pipeline orchestrator moves specs to `done/`.
+Only the pipeline agent moves specs to `done/`.
 
 ---
 

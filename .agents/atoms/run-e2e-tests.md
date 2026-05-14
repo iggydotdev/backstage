@@ -1,7 +1,7 @@
 # Skill: Run E2E Tests
 
 **Type:** Atom  
-**Used by:** QA Orchestrator  
+**Used by:** QA  
 **Trigger:** Step 3a of QA process — functional AC validation
 
 ---
@@ -84,4 +84,4 @@ For each AC in the inputs:
 - Never mark an AC as "pass" if its test was skipped
 - If the dev server fails to start, return `status: "error"` — not `"fail"`
 - Screenshot paths must be relative to the repo root so they can be attached to PR comments
-- If no e2e tests exist for a given AC, that is a coverage gap — mark it `"no_test"` and surface it to the QA Orchestrator
+- If no e2e tests exist for a given AC, that is a coverage gap — mark it `"no_test"` and surface it to the QA agent

@@ -31,7 +31,7 @@ Every event written to `pipeline.log.ndjson` must conform to this shape:
   "spec": "SPEC-001",
   "feature": "FEAT-001",
   "epic": "EPIC-001",
-  "agent": "pipeline-orchestrator | architect | ba | onboarding | developer-orchestrator | red | green | blue | qa",
+  "agent": "pipeline | architect | ba | onboarding | developer | red | green | blue | qa",
   "phase": "init | red | green | blue | pr | review | qa | merge | archive",
   "event": "<event_type>",
   "severity": "info | warn | error | fatal",

@@ -1,7 +1,7 @@
 # Skill: Check Definition of Done
 
 **Type:** Atom
-**Used by:** Developer Orchestrator, Pipeline Orchestrator
+**Used by:** Developer, Pipeline
 **Trigger:** After any sub-agent sets `tdd.phase` — before the orchestrator acts on it
 
 ---

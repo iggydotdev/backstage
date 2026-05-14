@@ -153,7 +153,7 @@ see [AGENTS.md](AGENTS.md).
 ## Key design decisions
 
 - **Sub-agent claims are verified, not trusted.** When Red says "tests are ready",
-  the Developer Orchestrator runs the Definition of Done checks before advancing.
+  the Developer agent runs the Definition of Done checks before advancing.
 - **Agents never merge.** Every merge requires human approval.
 - **Context is sliced per-agent.** Each agent reads from a pre-prepared
   `contextSlice` — not raw files — keeping token usage efficient and context relevant.

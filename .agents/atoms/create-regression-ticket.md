@@ -1,7 +1,7 @@
 # Skill: Create Regression Ticket
 
 **Type:** Atom  
-**Used by:** QA Orchestrator  
+**Used by:** QA  
 **Trigger:** A defect with `origin: "pre_existing"` is found during QA
 
 ---
@@ -101,7 +101,7 @@ Source branch: `<detectedInBranch>`.
 1. Construct the ticket payload from the defect object and source context
 2. Create the ticket via [TICKET_SYSTEM] MCP
 3. Return the new ticket ID and URL
-4. The QA Orchestrator stores these in `handoff.json > context.agentNotes`
+4. The QA agent stores these in `handoff.json > context.agentNotes`
 
 ---
 

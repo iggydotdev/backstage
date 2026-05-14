@@ -73,19 +73,19 @@ When anything fails, work through this in order:
 
 ## What each agent does on failure
 
-### Pipeline Orchestrator
+### Pipeline Agent
 - Catches failures from all sub-agents and atoms
 - Classifies the failure and applies the recovery tree
 - Restores from checkpoint when available
 - Writes all escalations to `pipeline.log.ndjson`
 - Posts escalation comment on PR or creates a draft PR if none exists
 
-### Developer Orchestrator
+### Developer Agent
 - On Red failure: stays in red, increments iteration, retries
 - On Green failure: returns to red, increments iteration
 - On Blue failure: returns to green, increments iteration
 - On max iterations: writes `loop_limit_reached` error event, returns
-  control to pipeline orchestrator with `ticket.status = "blocked"`
+  control to pipeline agent with `ticket.status = "blocked"`
 - Never silently swallows a test failure
 
 ### Red Agent
@@ -107,7 +107,7 @@ When anything fails, work through this in order:
   logs in `agentNotes`, continues — does not block on type errors alone
 - If lint fails: fixes lint errors before proceeding — lint is not optional
 
-### QA Orchestrator
+### QA Agent
 - If e2e environment fails to start: logs `external_service_error`, retries once,
   then runs unit tests only — does not skip QA entirely
 - If Playwright is unavailable: runs unit + AC coverage checks only, flags
@@ -159,7 +159,7 @@ Checkpoint: [checkpointRef] at [moment]
 **Suggested next step:**
 [Agent's best diagnosis of what the human needs to do]
 
-To resume after fixing: re-trigger the pipeline orchestrator for SPEC-NNN.
+To resume after fixing: re-trigger the pipeline agent for SPEC-NNN.
 It will restore from checkpoint and continue from [phase].
 ```
 
@@ -196,12 +196,12 @@ two or more QA runs.
 
 ### Regression amplification
 If a defect fix from the developer agent causes new test failures that weren't
-in the original `defects` list, the developer orchestrator logs
+in the original `defects` list, the developer agent logs
 `regression_detected` and returns the full failure set to the pipeline
-orchestrator rather than attempting a fix. The pipeline orchestrator escalates.
+agent rather than attempting a fix. The pipeline agent escalates.
 
 ### Context drift
 If `context.version` in `handoff.json` doesn't match the current
-`context/vX.Y` git tag, the pipeline orchestrator logs a `warn` event
+`context/vX.Y` git tag, the pipeline agent logs a `warn` event
 and re-reads context files before proceeding. It does not abort — stale
 context is recoverable, but it must be noticed.

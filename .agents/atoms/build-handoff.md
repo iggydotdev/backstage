@@ -1,7 +1,7 @@
 # Skill: Build Handoff
 
 **Type:** Atom
-**Used by:** Pipeline Orchestrator
+**Used by:** Pipeline
 **Trigger:** Step 5 of pipeline — after Figma nodes are fetched
 
 ---
@@ -108,7 +108,7 @@ Construct the full object per the schema in `.agents/handoff/schema.md`:
   "audit": [
     {
       "timestamp": "<ISO8601>",
-      "agent": "pipeline-orchestrator",
+      "agent": "pipeline",
       "action": "handoff.json initialised from SPEC-001",
       "result": "success",
       "iteration": 0

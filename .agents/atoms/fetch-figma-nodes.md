@@ -1,7 +1,7 @@
 # Skill: Fetch Figma Nodes
 
 **Type:** Atom
-**Used by:** Pipeline Orchestrator
+**Used by:** Pipeline
 **Trigger:** Step 4 of pipeline — after branch creation, before handoff build
 
 ---
@@ -34,7 +34,7 @@ For each URL:
 - Extract the file key and node ID
 
 If a URL is malformed, log it and skip — do not fail the entire pipeline.
-Flag the skipped URL in output so the pipeline orchestrator can surface it.
+Flag the skipped URL in output so the pipeline agent can surface it.
 
 ### Step 2 — Fetch via Figma MCP
 For each valid node, call the Figma MCP in sequence:
@@ -102,7 +102,7 @@ Transform the raw MCP responses into the `figmaNodes` schema:
 ## Fallback behaviour
 If the Figma MCP is entirely unavailable (connection error on all calls):
 - Return `{ "figmaNodes": [], "unavailable": true }`
-- The pipeline orchestrator handles this gracefully — it does not block
+- The pipeline agent handles this gracefully — it does not block
 - Developer and QA agents will see the unavailability flag and request
   Figma context manually if needed
 

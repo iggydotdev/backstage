@@ -1,7 +1,7 @@
 # Skill: Archive Spec
 
 **Type:** Atom
-**Used by:** Pipeline Orchestrator
+**Used by:** Pipeline
 **Trigger:** Step 10 of pipeline — after successful merge
 
 ---

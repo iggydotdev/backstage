@@ -1,9 +1,9 @@
 # Skill: Eval Pipeline
 
 **Type:** Atom
-**Used by:** Pipeline Orchestrator (auto), Human (manual trigger)
+**Used by:** Pipeline (auto), Human (manual trigger)
 **Trigger:**
-- Auto: every 10 completed specs (pipeline orchestrator checks after `archive-spec`)
+- Auto: every 10 completed specs (pipeline agent checks after `archive-spec`)
 - Auto: on every epic completion
 - Manual: human explicitly requests an eval run
 
@@ -67,7 +67,7 @@ for SPEC in $SPEC_IDS; do
   END=$(echo "$ALL_EVENTS" | jq "select(.spec == \"$SPEC\" and .event == \"pipeline_completed\") | .timestamp" | head -1)
 
   # Developer iterations used
-  ITERATIONS=$(echo "$ALL_EVENTS" | jq "select(.spec == \"$SPEC\" and .agent == \"developer-orchestrator\" and .event == \"phase_started\") | .iteration" | sort -n | tail -1)
+  ITERATIONS=$(echo "$ALL_EVENTS" | jq "select(.spec == \"$SPEC\" and .agent == \"developer\" and .event == \"phase_started\") | .iteration" | sort -n | tail -1)
 
   # QA runs
   QA_RUNS=$(echo "$ALL_EVENTS" | jq "select(.spec == \"$SPEC\" and .agent == \"qa\" and .event == \"phase_started\") | .iteration" | wc -l)

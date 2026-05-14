@@ -1,7 +1,7 @@
 # Skill: Prepare Context Slice
 
 **Type:** Atom
-**Used by:** Pipeline Orchestrator
+**Used by:** Pipeline
 **Trigger:** Immediately before invoking any agent or sub-agent
 
 ---
@@ -23,7 +23,7 @@ the source of truth — the source files always are.
 ## Inputs
 ```json
 {
-  "targetAgent": "red | green | blue | developer-orchestrator | qa | pipeline-orchestrator | architect | ba",
+  "targetAgent": "red | green | blue | developer | qa | pipeline | architect | ba",
   "specId": "SPEC-001",
   "sources": {
     "systemMd": ".agents/context/system.md",
@@ -340,8 +340,8 @@ Map `targetAgent` to its role token:
 
 | targetAgent | Role token |
 |---|---|
-| `pipeline-orchestrator` | `PIPELINE` |
-| `developer-orchestrator` | `DEV-ORCH` |
+| `pipeline` | `PIPELINE` |
+| `developer` | `DEV-ORCH` |
 | `red` | `RED` |
 | `green` | `GREEN` |
 | `blue` | `BLUE` |
@@ -410,7 +410,7 @@ descriptions and escalation comments.
 
 ### Notes for the PR description template
 
-When the developer orchestrator opens a draft PR, it should include:
+When the developer agent opens a draft PR, it should include:
 
 ```markdown
 ## Agent notes for reviewers

@@ -135,7 +135,7 @@ Schema version: `1.4.0`
   },
 
   "contextSlice": {
-    "preparedFor": "red | green | blue | developer-orchestrator | qa | pipeline-orchestrator | architect | ba",
+    "preparedFor": "red | green | blue | developer | qa | pipeline | architect | ba",
     "preparedAt": "ISO8601",
     "schemaVersion": "1.4.0",
     "domainGlossary": "Trimmed domain concepts relevant to this spec and agent",
@@ -164,7 +164,7 @@ Schema version: `1.4.0`
   "audit": [
     {
       "timestamp": "ISO8601",
-      "agent": "pipeline-orchestrator | developer-orchestrator | red | green | blue | qa",
+      "agent": "pipeline | developer | red | green | blue | qa",
       "action": "Description of what was done",
       "result": "success | failure | escalated | halted",
       "iteration": 0
@@ -179,38 +179,38 @@ Schema version: `1.4.0`
 
 | Field | Owner | Others |
 |---|---|---|
-| `ticket.status` | pipeline-orchestrator, developer-orchestrator | read |
-| `ticket.id`, `title`, `url` | pipeline-orchestrator (init) | read |
-| `requirements.*` | pipeline-orchestrator (init from spec) | read |
-| `design.figmaNodes` | pipeline-orchestrator (init from Figma) | read |
-| `branch.name`, `base` | pipeline-orchestrator (init) | read |
-| `branch.prUrl` | developer-orchestrator | read |
-| `tdd.phase` | developer-orchestrator, red, green, blue | read |
-| `tdd.loop.iteration` | developer-orchestrator only | read |
+| `ticket.status` | pipeline, developer | read |
+| `ticket.id`, `title`, `url` | pipeline (init) | read |
+| `requirements.*` | pipeline (init from spec) | read |
+| `design.figmaNodes` | pipeline (init from Figma) | read |
+| `branch.name`, `base` | pipeline (init) | read |
+| `branch.prUrl` | developer | read |
+| `tdd.phase` | developer, red, green, blue | read |
+| `tdd.loop.iteration` | developer only | read |
 | `tdd.testResults` | red, green, blue (own phase only) | read |
 | `tdd.acCoverage` | red (init + update), green, blue (update) | read |
-| `qaRuns` | qa-orchestrator only | read |
-| `dod` | check-dod atom (via developer-orchestrator) | read |
-| `defects` | qa-orchestrator (append) | developer reads |
-| `defects[].status` | developer-orchestrator, qa-orchestrator | read |
-| `humanReview.*` | pipeline-orchestrator (reads from PR state) | read |
+| `qaRuns` | qa only | read |
+| `dod` | check-dod atom (via developer) | read |
+| `defects` | qa (append) | developer reads |
+| `defects[].status` | developer, qa | read |
+| `humanReview.*` | pipeline (reads from PR state) | read |
 | `context.agentNotes` | any agent — append only, tagged format [WRITER → TARGET] | append |
 | `context.agentNotesArchive` | prepare-context-slice atom (auto-managed) | read |
-| `contextSlice` | pipeline-orchestrator only (overwrites before each agent) | read |
+| `contextSlice` | pipeline only (overwrites before each agent) | read |
 | `audit` | all agents — append only | append |
 
 ---
 
 ## contextSlice rules
 
-- Written by the pipeline orchestrator immediately before invoking any agent
+- Written by the pipeline agent immediately before invoking any agent
 - Each agent reads **only** from `contextSlice` — not directly from source files
 - The slice is role-specific — fields present vary by `preparedFor` value
 - Source of truth always remains the context files and spec — the slice is a
   trimmed read-only view
 - If `contextSlice.preparedFor` does not match the invoking agent's role,
   the agent must stop and log a `warn` event before proceeding
-- See `.agents/skills/atoms/prepare-context-slice.md` for full profile definitions
+- See `.agents/atoms/prepare-context-slice.md` for full profile definitions
 
 ---
 
@@ -219,9 +219,9 @@ Schema version: `1.4.0`
 - **No agent overwrites another agent's fields** outside its own scope.
 - **`audit` is append-only.** Every agent appends on every meaningful action.
 - **`context.agentNotes` is append-only.** Prefix with `[AGENT-NAME]:`.
-- **`tdd.loop.iteration`** incremented only by the developer orchestrator.
+- **`tdd.loop.iteration`** incremented only by the developer agent.
 - **`ticket.status`** updated only by orchestrators (pipeline or developer).
-- **`qaRuns`** incremented by QA orchestrator at the start of each run.
+- **`qaRuns`** incremented by the QA agent at the start of each run.
 - If `tdd.loop.iteration >= maxIterations` → escalate, do not loop again.
 - If `qaRuns >= 3` → escalate, do not run QA again.
 - `handoff.json` is committed on every meaningful state change.

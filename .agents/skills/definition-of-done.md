@@ -1,6 +1,6 @@
 # Definition of Done
 
-The canonical, binary checklist the developer orchestrator verifies
+The canonical, binary checklist the developer agent verifies
 before accepting any phase transition. Every check must pass. There
 are no partial passes — a phase is done or it is not.
 
@@ -13,7 +13,7 @@ No LLM judgment. No self-certification.
 ## How this works
 
 When a sub-agent sets `tdd.phase = "X"` in `handoff.json`, it is
-making a **claim** that it is done. The developer orchestrator treats
+making a **claim** that it is done. The developer agent treats
 this as a request, not a fact. It invokes `check-dod` with the claimed
 phase, receives a structured result, and only advances if all checks
 pass.
@@ -21,7 +21,7 @@ pass.
 ```
 Sub-agent sets tdd.phase = "green"
        ↓
-Developer Orchestrator invokes check-dod(phase: "green")
+Developer invokes check-dod(phase: "green")
        ↓
 check-dod runs binary checks
        ↓
@@ -119,7 +119,7 @@ the one exception to the hard pass requirement. If B-4 fails for this reason:
 | Q-7 | `defects` array is empty OR all open defects are `pre_existing` | Check `handoff.json > defects` — no `origin: "current_ticket"` defects open |
 
 **On failure:**
-- If Q-1: unit regression — return to Developer Orchestrator with defect
+- If Q-1: unit regression — return to Developer with defect
 - If Q-2/Q-3: e2e failure — classify defect origin (git blame), route accordingly
 - If Q-4: regression detected — create regression ticket if pre-existing, return to dev if current
 - If Q-5: a11y violation — treat as defect, classify by origin
@@ -174,9 +174,9 @@ The `check-dod` atom returns this structure for every check run:
 ## Iteration accounting
 
 Every DoD failure that results in `return_to_*` increments
-`tdd.loop.iteration` in the developer orchestrator.
+`tdd.loop.iteration` in the developer agent.
 
-The developer orchestrator checks this **before** invoking `check-dod` —
+The developer agent checks this **before** invoking `check-dod` —
 if `iteration >= maxIterations`, escalate without running checks.
 
 DoD failures are logged to `pipeline.log.ndjson` with:

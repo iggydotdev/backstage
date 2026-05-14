@@ -1,7 +1,7 @@
 # Skill: Create Branch
 
 **Type:** Atom
-**Used by:** Pipeline Orchestrator
+**Used by:** Pipeline
 **Trigger:** Step 3 of pipeline — before handoff.json is built
 
 ---
@@ -46,7 +46,7 @@ git branch -a | grep "feature/SPEC-001-login-form-component"
 If the branch already exists locally or on remote:
 - Return the existing branch name
 - Set `alreadyExisted: true` in output
-- Do NOT reset or force-push — the pipeline orchestrator will decide how to handle it
+- Do NOT reset or force-push — the pipeline agent will decide how to handle it
 
 If the branch does not exist:
 ```bash

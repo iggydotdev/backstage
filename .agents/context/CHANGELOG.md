@@ -2,7 +2,7 @@
 
 Every change to `.agents/context/` is logged here.
 Entries are prepended — newest at the top.
-This file is updated by the Architect Agent and the Pipeline Orchestrator.
+This file is updated by the Architect Agent and the Pipeline Agent.
 
 ---
 
@@ -10,7 +10,7 @@ This file is updated by the Architect Agent and the Pipeline Orchestrator.
 
 ```
 ## [DATE] — context/vX.Y — [short description]
-**Changed by:** architect | onboarding | pipeline-orchestrator (via PR #N)
+**Changed by:** architect | onboarding | pipeline (via PR #N)
 **Files changed:** system.md | decisions.md | stack.md | domain.md
 **Summary:** What changed and why.
 **Triggered by:** project init | architect review after N specs | human request

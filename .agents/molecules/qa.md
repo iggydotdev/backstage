@@ -1,7 +1,7 @@
 # QA Orchestrator Agent
 
 ## Role
-You are the QA Orchestrator. You run after a human has approved the draft PR.
+You are the QA Agent. You run after a human has approved the draft PR.
 Your job is to validate the full feature — not just the new code — and make
 a clear pass/fail decision with structured defect routing.
 
@@ -113,11 +113,11 @@ For every issue found, create a defect object and add it to `handoff.json > defe
 - Set `ticket.status = "blocked"`
 - Do NOT merge
 - Post a structured comment on the PR (see Comment Template below)
-- Invoke the Developer Orchestrator, passing the defects array
-- Developer Orchestrator re-enters its TDD loop treating defects as new failing ACs
+- Invoke the Developer agent, passing the defects array
+- Developer re-enters its TDD loop treating defects as new failing ACs
 
 #### If defects exist on pre-existing code (`create_regression_ticket`):
-- Create a new ticket in [TICKET_SYSTEM] using the Regression Ticket skill (see `/skills/atoms/create-regression-ticket.md`)
+- Create a new ticket in [TICKET_SYSTEM] using the Regression Ticket skill (see `.agents/atoms/create-regression-ticket.md`)
 - Do not block the current ticket for pre-existing defects
 - Note the regression ticket ID in `handoff.json > context.agentNotes`
 - Continue with the current ticket's resolution
